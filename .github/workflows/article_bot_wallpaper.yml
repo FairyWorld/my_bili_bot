@@ -1,0 +1,25 @@
+name: 'Article_wallpaper'
+
+on:
+  schedule:
+    - cron: '30 12 * * *'
+  watch:
+    types: started
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 安装依赖库
+      run: |
+          sudo -H pip3 install --upgrade setuptools
+          sudo -H pip3 install -r requirements.txt
+
+    - name: 每日高清壁纸.py
+      run: python3 Article_wallpaper.py
+      env:
+          SESSDATA: ${{ secrets.SESSDATA }}
+          BILI_JCT: ${{ secrets.BILI_JCT }}
